@@ -1,0 +1,84 @@
+package com.beans;
+
+public class GetCreditCardsBean {
+
+	long id;
+	int status;
+	boolean expired;
+	String cardHolderName;
+	String displayNumber;
+	String address1;
+	String address2;
+	String city;
+	String countryCode;
+	String state;
+	String zip;
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public boolean isExpired() {
+		return expired;
+	}
+	public void setExpired(boolean expired) {
+		this.expired = expired;
+	}
+	public String getCardHolderName() {
+		return cardHolderName;
+	}
+	public void setCardHolderName(String cardHolderName) {
+		this.cardHolderName = cardHolderName;
+	}
+	public String getDisplayNumber() {
+		return displayNumber;
+	}
+	public void setDisplayNumber(String displayNumber) {
+		this.displayNumber = displayNumber;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getCountryCode() {
+		return countryCode;
+	}
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+	
+}
