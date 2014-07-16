@@ -1,0 +1,97 @@
+package com.adapters;
+
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.beans.GetAllContactsBean;
+import com.onlinemobilerecharge.R;
+import com.onlinemobilerecharge.SendNow_step2Activity;
+
+public class PhonebookAdapter extends ArrayAdapter<GetAllContactsBean> {
+	Activity context;
+	LayoutInflater inflater;
+	List<GetAllContactsBean> listContacts;
+
+	public PhonebookAdapter(Activity context, int resource,
+			int textViewResourceId, List<GetAllContactsBean> objects) {
+		super(context, resource, textViewResourceId);
+		this.context = context;
+		this.listContacts = objects;
+		inflater = context.getLayoutInflater();
+
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return listContacts.size();
+	}
+	
+	public class ViewHolder {
+		TextView firstName;
+		TextView lastName;
+		TextView phoneNum;
+		Button send;
+	}
+
+	@Override
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		// TODO Auto-generated method stub
+		ViewHolder holder;
+		holder = new ViewHolder();
+		LayoutInflater inflator = context.getLayoutInflater();
+		if (convertView == null) {
+
+			convertView = inflater.inflate(
+					com.onlinemobilerecharge.R.layout.phonelist, null);
+			holder.firstName = (TextView) convertView
+					.findViewById(com.onlinemobilerecharge.R.id.txt_fname);
+			holder.lastName = (TextView) convertView
+					.findViewById(com.onlinemobilerecharge.R.id.txt_lname);
+			holder.phoneNum = (TextView) convertView
+					.findViewById(com.onlinemobilerecharge.R.id.txt_phoneno);
+			holder.send=(Button)convertView.findViewById(R.id.btn_phonelist_send);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
+
+		//PhonebookBean bean = listContacts.get(position);
+		final GetAllContactsBean bean=listContacts.get(position);
+		Log.e("NAME---",bean.getFirstName());
+		holder.firstName.setText(bean.getFirstName());
+		holder.lastName.setText(bean.getLastName());
+		holder.phoneNum.setText(bean.getMobilePhone());
+		
+		((Button)(convertView.findViewById(R.id.btn_phonelist_send))).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent send=new Intent(context, SendNow_step2Activity.class);
+				
+				send.putExtra("displayField", bean.getDisplayField());
+				send.putExtra("carrierID", bean.getCarrierID());
+				send.putExtra("phoneBookID", bean.getID());
+				context.startActivity(send);
+				context.finish();
+			}
+		});
+		
+		return convertView;
+
+	}
+
+}
