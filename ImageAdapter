@@ -1,0 +1,130 @@
+package com.adapters;
+
+import java.util.ArrayList;
+
+import com.beans.GetLoadIncrementBean;
+import com.onlinemobilerecharge.R;
+
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class ImageAdapter_Step2 extends BaseAdapter{
+	 private Activity mContext;
+     private LayoutInflater mInflater;
+     ArrayList<GetLoadIncrementBean> loadIncrementsList;
+     
+     public ImageAdapter_Step2 (Activity c,ArrayList<GetLoadIncrementBean> list){
+		 mContext = c;
+         mInflater = LayoutInflater.from(c);
+         this.loadIncrementsList=list;
+     }
+	
+	
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return loadIncrementsList.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	private class ViewHolder {
+		TextView txt_amount;
+		TextView txt_usValue;
+		TextView txt_foreignValue;
+		ImageView back_img;
+	}
+
+	@Override
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		// TODO Auto-generated method stub
+		 final ViewHolder holder;
+         if (convertView == null) {            
+            convertView = mInflater.inflate(R.layout.raw, null);
+            holder = new ViewHolder();
+            holder.back_img = (ImageView) convertView.findViewById(R.id.img_schedulebox);
+            holder.txt_amount = (TextView) convertView.findViewById(R.id.txt_recharge1);
+            holder.txt_usValue = (TextView) convertView.findViewById(R.id.txt_recharge2);
+            holder.txt_foreignValue = (TextView) convertView.findViewById(R.id.txt_recharge3);
+           
+            convertView.setTag(holder);
+            
+         } else {
+             holder = (ViewHolder) convertView.getTag();
+         }
+          
+         GetLoadIncrementBean bean=loadIncrementsList.get(position);
+        
+         if (bean.isSelected())
+ 		{
+ 			holder.back_img.setImageResource(R.drawable.img_schedule_box_h);
+ 		}else{
+ 			holder.back_img.setImageResource(R.drawable.img_schedule_box);
+
+ 		}
+        for(int i=0;i<loadIncrementsList.size();i++)
+			{
+				Log.e("DATA---", i+"");
+			}
+        //holder.back_img.setImageResource(R.drawable.img_schedule_box);
+        double foreignValue=bean.getForeignValue();
+        double usValue=bean.getUsValue();
+        String currency=bean.getCurrency();
+         holder.txt_amount.setText(foreignValue+"");
+         holder.txt_usValue.setText("$ "+usValue);
+         holder.txt_foreignValue.setText(currency+" "+foreignValue+"");
+                      
+         convertView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				for(int i=0;i<loadIncrementsList.size();i++)
+				{
+					GetLoadIncrementBean loadBean=loadIncrementsList.get(i);
+					
+					if(i==position)
+					{
+						GetLoadIncrementBean bean=loadIncrementsList.get(i);
+						if(!bean.isSelected())
+						{
+							bean.setSelected(true);
+						}
+					}else {
+						loadBean.setSelected(false);
+					}
+				}
+				notifyDataSetChanged();
+			}
+			
+		});
+         return convertView;       
+     }
+
+     
+	
+	/*public Integer[] mThumbIds={
+			R.drawable.img_schedule_box ,R.drawable.img_schedule_box, 
+		      R.drawable.img_schedule_box, R.drawable.img_schedule_box,R.drawable.img_schedule_box
+	};
+*/
+}
